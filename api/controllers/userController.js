@@ -1,3 +1,7 @@
 const User = require("../models/User");
 
-exports.singUp = async (req, res) => {};
+exports.signUp = async (req, res) => {
+  const { name, email, password } = req.body;
+
+  console.log(req.body);
+};

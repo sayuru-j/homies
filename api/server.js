@@ -3,6 +3,8 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 require("dotenv").config();
 
+const userRoutes = require("./routes/userRoutes");
+
 const app = express();
 
 app.use(express.json());
@@ -11,5 +13,8 @@ app.use(cors());
 connectDB();
 
 const port = process.env.PORT || 8000;
+
+// Route handlers
+app.use("/users", userRoutes);
 
 app.listen(port, () => console.log(`Express server listening on ${port}`));
