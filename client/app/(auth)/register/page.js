@@ -3,10 +3,12 @@ import React from "react";
 
 function Page() {
   return (
-    <div className="grid grid-cols-2 h-screen">
-      <div className=""></div>
-      <div className="bg-white">
-        <UserRegisterForm />
+    <div className="grid lg:grid-cols-2 h-screen">
+      <div className="hidden lg:flex"></div>
+      <div className="bg-white flex items-center justify-center">
+        <div className="max-w-[350px] w-full">
+          <UserRegisterForm />
+        </div>
       </div>
     </div>
   );
