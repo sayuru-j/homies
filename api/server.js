@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
+const sessionMiddleware = require("./middleware/session");
 
 const app = express();
 
@@ -15,8 +16,11 @@ connectDB();
 
 const port = process.env.PORT || 8000;
 
+// Middleware
+app.use(sessionMiddleware);
+
 // Route handlers
-app.use("/users", userRoutes);
+app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
 
 app.listen(port, () => console.log(`Express server listening on ${port}`));

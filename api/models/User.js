@@ -28,6 +28,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["developer", "designer"],
     },
+    power: {
+      type: String,
+      default: "user",
+      enum: ["admin", "user"],
+    },
     connections: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     links: {
       github: {
