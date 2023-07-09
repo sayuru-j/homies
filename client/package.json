@@ -11,6 +11,7 @@
   "dependencies": {
     "@radix-ui/react-form": "^0.0.3",
     "autoprefixer": "10.4.14",
+    "axios": "^1.4.0",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",
     "lucide-react": "^0.259.0",
