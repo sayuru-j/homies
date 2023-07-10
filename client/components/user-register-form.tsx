@@ -11,7 +11,7 @@ import Seperator from "./UI/seperator";
 import { Icons } from "./icons";
 import Link from "next/link";
 import axios from "axios";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface UserRegisterFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -31,6 +31,7 @@ export function UserRegisterForm({
   const [isLoading, setIsloading] = useState<boolean>(false);
   const searchParams = useSearchParams();
   const selectedRoleRef = useRef<string>("");
+  const router = useRouter();
 
   const handleRadioChange = (e: any) => {
     selectedRoleRef.current = e.target.value;
@@ -52,9 +53,10 @@ export function UserRegisterForm({
     if (signInResult.status === 200) {
       setIsloading(false);
       console.log("Success"); //Set a toast message
+      router.push("/login");
     }
 
-    if (signInResult.status === 404) {
+    if (signInResult.status === 202) {
       setIsloading(false);
       console.log("Login failed"); // Set a toast message
     }

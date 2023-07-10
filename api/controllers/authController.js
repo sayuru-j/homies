@@ -9,7 +9,7 @@ exports.signUp = async (req, res) => {
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).send({ error: "Email is already taken" });
+      return res.status(202).send({ error: "Email is already taken" });
     }
 
     const username = generateUsername("", 3); // username genrator
