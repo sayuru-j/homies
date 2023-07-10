@@ -12,4 +12,7 @@ router.get("/logout", userController.logOut);
 // Make power
 router.put("/makepower", verifyToken, userController.makePower);
 
+// Get all users
+router.get("/all", verifyToken, userController.getUsers);
+
 module.exports = router;

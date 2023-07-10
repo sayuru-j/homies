@@ -27,9 +27,9 @@ exports.makePower = async (req, res) => {
 
 exports.getSession = async (req, res) => {
   const { userId, userName, name } = req.session;
-
-  if (!userId) return null;
-  res.send({ userId, userName, name });
+  const { expires } = req.session.cookie;
+  if (!userId) return res.send({ message: "No session" });
+  else res.send({ userId, userName, name, expires });
 };
 
 exports.logOut = async (req, res) => {
@@ -41,4 +41,14 @@ exports.logOut = async (req, res) => {
       res.status(200).send({ message: "Logout successfull" });
     }
   });
+};
+
+exports.getUsers = async (req, res) => {
+  const { power } = req.user;
+  if (power === "admin") {
+    const users = await User.find({});
+    res.send(users);
+  } else {
+    res.send({ message: "You're not authorized" });
+  }
 };
