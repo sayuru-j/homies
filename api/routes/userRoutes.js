@@ -16,7 +16,6 @@ router.put("/makepower", verifyToken, userController.makePower);
 router.get("/all", verifyToken, userController.getUsers);
 
 //Delete users
-router.delete("/delete/:id",userController.delete);
-
+router.delete("/delete/:id", userController.delete);
 
 module.exports = router;

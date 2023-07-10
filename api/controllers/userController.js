@@ -53,17 +53,13 @@ exports.getUsers = async (req, res) => {
   }
 };
 
-
-exports.delete = async(req,res) => {
-  const {id}=req.params;
-  if(id){
-    
-      const result = await User.findOneAndDelete({_id:id});
-      if(result) res.send({message:"User Deleted"})
-      else{
-        res.send({error:"User Not Found"})
-      }
-    
+exports.delete = async (req, res) => {
+  const { id } = req.params;
+  if (id) {
+    const result = await User.findOneAndDelete({ _id: id });
+    if (result) res.send({ message: "User Deleted" });
+    else {
+      res.send({ error: "User Not Found" });
+    }
   }
-
-}
+};
