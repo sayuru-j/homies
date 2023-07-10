@@ -4,39 +4,46 @@ const bcrypt = require("bcrypt");
 const { generateToken } = require("../middleware/auth");
 
 exports.signUp = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  try {
+    const { name, email, password, role } = req.body;
 
-  const user = await User.findOne({ email }); // check existing user
-  if (!user) {
-    let username = generateUsername("", 3);
-    try {
-      const created = await User.create({
-        name: name,
-        username: username,
-        email: email,
-        password: await bcrypt.hash(password, 10),
-        role: role,
-      });
-      res.status(200).send({
-        status: "success",
-      });
-    } catch (error) {
-      throw new Error(error.message);
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).send({ error: "Email is already taken" });
     }
+
+    const username = generateUsername("", 3); // username genrator
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const createdUser = await User.create({
+      name,
+      username,
+      email,
+      password: hashedPassword,
+      role,
+    });
+
+    res.status(200).send({ status: "success", createdUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Internal Server Error" });
   }
-  if (user) res.send({ status: "Email is already taken" });
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
-  if (!user) return res.status(403).send({ status: "User not found" });
-  if (user) {
-    const matches = await bcrypt.compare(password, user.password);
-    if (matches) {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).send({ error: "User not found" });
+    }
+
+    const passwordMatched = await bcrypt.compare(password, user.password);
+    if (passwordMatched) {
       const accessToken = generateToken(user);
-      // Set session
+
+      // Save session
       req.session.userId = user._id;
       req.session.userName = user.username;
       req.session.name = user.name;
@@ -48,9 +55,10 @@ exports.login = async (req, res) => {
         accessToken,
       });
     } else {
-      res.send({ error: "Invalid password" });
+      return res.status(401).send({ error: "Invalid password" });
     }
-  } else {
-    return res.status(401).send({ status: "Unauthorized" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ error: "Internal Server Error" });
   }
 };

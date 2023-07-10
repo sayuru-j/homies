@@ -23,4 +23,4 @@ app.use(sessionMiddleware);
 app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
 
-app.listen(port, () => console.log(`Express server listening on ${port}`));
+app.listen(port, () => console.log(`App listening on ${port}`));

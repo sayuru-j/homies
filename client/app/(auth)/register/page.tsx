@@ -12,6 +12,16 @@ function Register() {
   return (
     <main className="container h-screen w-screen grid lg:grid-cols-2 lg:px-0 lg:max-w-none">
       <Link
+        href="/"
+        className={`${buttonVariants({
+          variant: "ghost",
+          size: "sm",
+        })} absolute top-4 right-4 md:right-8 md:top-8 lg:text-white`}
+        passHref
+      >
+        <Icons.plus size={16} strokeWidth={2.5} className="rotate-45" />
+      </Link>
+      <Link
         href="/login"
         className={`${buttonVariants({
           variant: "ghost",

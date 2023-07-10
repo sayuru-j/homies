@@ -16,4 +16,11 @@ const sessionMiddleware = session({
   }),
 });
 
-module.exports = sessionMiddleware;
+const saveSession = (req, res, next) => {
+  req.session.userId = req.user._id;
+  req.session.userName = req.user.username;
+  req.session.name = req.user.name;
+  next();
+};
+
+(module.exports = sessionMiddleware), { saveSession };
