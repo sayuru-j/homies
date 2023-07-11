@@ -23,7 +23,9 @@ exports.signUp = async (req, res) => {
       role,
     });
 
-    res.status(200).send({ status: "success", createdUser });
+    res
+      .status(200)
+      .send({ success: "Account has been registered", createdUser });
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: "Internal Server Error" });

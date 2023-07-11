@@ -10,8 +10,8 @@ import { useSearchParams } from "next/navigation";
 import Seperator from "./UI/seperator";
 import { Icons } from "./icons";
 import Link from "next/link";
-import axios from "axios";
 import { useRouter } from "next/navigation";
+import { registerRequest } from "@/lib/services";
 
 interface UserRegisterFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -25,6 +25,7 @@ export function UserRegisterForm({
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<FormData>({
     resolver: zodResolver(userRegisterSchema),
   });
@@ -40,32 +41,47 @@ export function UserRegisterForm({
   async function onSubmit(data: FormData) {
     setIsloading(true);
 
-    const signInResult = await axios.post(
-      `${process.env.NEXT_PUBLIC_EXPRESS_API}/auth/register`,
-      {
-        name: "Test",
-        email: data.email.toLowerCase(),
-        password: data.password,
-        role: selectedRoleRef.current,
-      }
-    );
+    const signInResult = await registerRequest("/auth/register", {
+      name: data.name,
+      email: data.email.toLowerCase(),
+      password: data.password,
+      role: selectedRoleRef.current,
+    });
 
-    if (signInResult.status === 200) {
-      setIsloading(false);
-      console.log("Success"); //Set a toast message
-      router.push("/login");
-    }
-
-    if (signInResult.status === 202) {
-      setIsloading(false);
-      console.log("Login failed"); // Set a toast message
-    }
+    if (signInResult.error)
+      setError("email", {
+        type: "required",
+        message: signInResult.error,
+      });
+    if (signInResult.success) router.push("/login");
   }
 
   return (
     <div className={`${className} "grid gap-6"`}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-2">
+          <div className="grid gap-1">
+            <label
+              className="text-xs text-muted-foreground pl-1"
+              htmlFor="name"
+            >
+              Name
+            </label>
+            <input
+              id="name"
+              className="h-10 placeholder:text-sm placeholder:text-muted-foreground rounded border px-2"
+              placeholder="Pops Lal"
+              type="text"
+              autoCorrect="off"
+              disabled={isLoading}
+              {...register("name")}
+            />
+            {errors?.name && (
+              <p className="px-1 text-xs text-red-600">
+                {errors?.name?.message}
+              </p>
+            )}
+          </div>
           <div className="grid gap-1">
             <label
               className="text-xs text-muted-foreground pl-1"
@@ -76,7 +92,7 @@ export function UserRegisterForm({
             <input
               id="email"
               className="h-10 placeholder:text-sm placeholder:text-muted-foreground rounded border px-2"
-              placeholder="pops@gmail.com"
+              placeholder="example@gmail.com"
               type="email"
               autoCapitalize="none"
               autoComplete="email"
@@ -123,6 +139,7 @@ export function UserRegisterForm({
                 name="bordered-radio"
                 className="w-4 h-4"
                 onChange={handleRadioChange}
+                required
               />
               <label
                 htmlFor="designer"
@@ -139,6 +156,7 @@ export function UserRegisterForm({
                 name="bordered-radio"
                 className="w-4 h-4 "
                 onChange={handleRadioChange}
+                required
               />
 
               <label

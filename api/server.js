@@ -5,6 +5,8 @@ require("dotenv").config();
 
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
+const groupRoutes = require("./routes/groupRoutes");
+
 const sessionMiddleware = require("./middleware/session");
 
 const app = express();
@@ -22,5 +24,7 @@ app.use(sessionMiddleware);
 // Route handlers
 app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
+
+app.use("/group", groupRoutes);
 
 app.listen(port, () => console.log(`App listening on ${port}`));
