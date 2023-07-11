@@ -8,3 +8,13 @@ export type SiteConfig = {
     instagram: string;
   };
 };
+
+export type NavItem = {
+  title: string;
+  href: string;
+  disabled?: boolean;
+};
+
+export type NavBarConfig = {
+  mainNav: NavItem[];
+};

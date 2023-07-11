@@ -2,6 +2,7 @@ import { siteConfig } from "@/config/site";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { GlobalContextProvider } from "@/context/store";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -54,7 +55,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={`${inter.className} min-h-screen bg-background antialiased`}
       >
-        {children}
+        <GlobalContextProvider>{children}</GlobalContextProvider>
       </body>
     </html>
   );

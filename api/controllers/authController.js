@@ -38,7 +38,7 @@ exports.login = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).send({ error: "User not found" });
+      return res.status(202).send({ error: "User not found" });
     }
 
     const passwordMatched = await bcrypt.compare(password, user.password);
@@ -51,13 +51,14 @@ exports.login = async (req, res) => {
       req.session.name = user.name;
 
       return res.status(200).json({
+        userId: user._id,
         name: user.name,
         username: user.username,
         email: user.email,
         accessToken,
       });
     } else {
-      return res.status(401).send({ error: "Invalid password" });
+      return res.status(202).send({ error: "Invalid password" });
     }
   } catch (error) {
     console.error(error);

@@ -28,6 +28,7 @@ exports.makePower = async (req, res) => {
 exports.getSession = async (req, res) => {
   const { userId, userName, name } = req.session;
   const { expires } = req.session.cookie;
+  console.log(req.headers.authorization);
   if (!userId) return res.send({ message: "No session" });
   else res.send({ userId, userName, name, expires });
 };

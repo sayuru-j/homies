@@ -1,5 +1,6 @@
 import { buttonVariants } from "@/components/UI/button";
 import { Icons } from "@/components/icons";
+import { UserLoginForm } from "@/components/user-login-form";
 import Link from "next/link";
 
 export const metadata = {
@@ -44,7 +45,9 @@ function Login() {
           </h1>
         </div>
 
-        <div className="w-full"></div>
+        <div className="w-full">
+          <UserLoginForm />
+        </div>
       </section>
     </main>
   );

@@ -30,7 +30,6 @@ export function UserRegisterForm({
     resolver: zodResolver(userRegisterSchema),
   });
   const [isLoading, setIsloading] = useState<boolean>(false);
-  const searchParams = useSearchParams();
   const selectedRoleRef = useRef<string>("");
   const router = useRouter();
 

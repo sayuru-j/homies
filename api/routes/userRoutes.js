@@ -4,7 +4,7 @@ const userController = require("../controllers/userController");
 const { verifyToken } = require("../middleware/auth");
 
 // Profile
-router.get("/profile", userController.getSession);
+router.get("/session", verifyToken, userController.getSession);
 
 // Logout
 router.get("/logout", userController.logOut);
