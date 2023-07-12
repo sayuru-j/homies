@@ -11,7 +11,7 @@ import Seperator from "./UI/seperator";
 import { Icons } from "./icons";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { registerRequest } from "@/lib/services";
+import AuthService from "@/lib/services/auth-service";
 
 interface UserRegisterFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -40,18 +40,22 @@ export function UserRegisterForm({
   async function onSubmit(data: FormData) {
     setIsloading(true);
 
-    const signInResult = await registerRequest("/auth/register", {
+    const signInResult = await AuthService.register({
       name: data.name,
       email: data.email.toLowerCase(),
       password: data.password,
       role: selectedRoleRef.current,
     });
 
-    if (signInResult.error)
+    if (signInResult.error) {
       setError("email", {
         type: "required",
         message: signInResult.error,
       });
+
+      setIsloading(false);
+    }
+
     if (signInResult.success) router.push("/login");
   }
 

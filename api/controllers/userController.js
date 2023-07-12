@@ -1,27 +1,19 @@
 const User = require("../models/User");
 
 exports.makePower = async (req, res) => {
-  const { power } = req.user;
   const { email, new_power } = req.body;
-  if (power === "admin") {
-    try {
-      const result = await User.findOneAndUpdate(
-        { email },
-        {
-          power: new_power,
-        }
-      );
-      if (result)
-        res
-          .status(200)
-          .send({ message: `User's power changed to ${new_power}` });
-    } catch (error) {
-      console.error(error);
-    }
-  } else {
-    res
-      .status(401)
-      .send({ message: "You do not have permission to access this" });
+
+  try {
+    const result = await User.findOneAndUpdate(
+      { email },
+      {
+        power: new_power,
+      }
+    );
+    if (result)
+      res.status(200).send({ message: `User's power changed to ${new_power}` });
+  } catch (error) {
+    console.error(error);
   }
 };
 

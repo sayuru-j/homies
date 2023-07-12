@@ -1,5 +1,6 @@
 "use client";
 
+import AuthService from "@/lib/services/auth-service";
 import {
   createContext,
   useContext,
@@ -35,14 +36,14 @@ export const GlobalContextProvider = ({ children }: any) => {
   const [data, setData] = useState<DataType[] | []>([]);
 
   useEffect(() => {
-    const userLoggedIn = localStorage.getItem("User");
+    const userLoggedIn = AuthService.getCurrentUser();
 
     if (userLoggedIn) {
-      setUserId(JSON.parse(userLoggedIn).userId);
+      setUserId(userLoggedIn.userId);
       setData([
         {
-          name: JSON.parse(userLoggedIn).name,
-          userName: JSON.parse(userLoggedIn).username,
+          name: userLoggedIn.name,
+          userName: userLoggedIn.username,
           expires: "Will expire soon",
         },
       ]);

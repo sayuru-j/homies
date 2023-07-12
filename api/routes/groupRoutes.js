@@ -2,15 +2,14 @@ const express = require("express");
 const router = express.Router();
 
 const groupController = require("../controllers/groupController");
-const { verifyToken } = require("../middleware/auth");
 
 // --- User's current groups ---
-router.get("/", verifyToken, groupController.currentGroups);
+router.get("/", groupController.currentGroups);
 
 // --- Group creation ---
-router.post("/create", verifyToken, groupController.createGroup);
+router.post("/create", groupController.createGroup);
 
 // --- Group deletes ---
-router.delete("/:groupId", verifyToken, groupController.deleteGroup);
+router.delete("/:groupId", groupController.deleteGroup);
 
 module.exports = router;

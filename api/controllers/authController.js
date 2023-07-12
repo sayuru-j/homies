@@ -1,34 +1,33 @@
 const User = require("../models/User");
 const { generateUsername } = require("unique-username-generator");
 const bcrypt = require("bcrypt");
-const { generateToken } = require("../middleware/auth");
+const { authJwt } = require("../middleware");
 
 exports.signUp = async (req, res) => {
+  const user = new User({
+    name: req.body.name,
+    username: generateUsername(), // Username generation
+    email: req.body.email,
+    password: await bcrypt.hash(req.body.password, 10), // Hashing the password
+    role: req.body.role,
+  });
+
   try {
-    const { name, email, password, role } = req.body;
+    const createdUser = await User.create(user);
 
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(202).send({ error: "Email is already taken" });
-    }
-
-    const username = generateUsername("", 3); // username genrator
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const createdUser = await User.create({
-      name,
-      username,
-      email,
-      password: hashedPassword,
-      role,
-    });
-
-    res
-      .status(200)
-      .send({ success: "Account has been registered", createdUser });
+    if (createdUser) {
+      res.status(200).send({
+        message: "User created successfully",
+        createdUser,
+      });
+    } else
+      res.status(403).send({
+        error: "User creation failed",
+      });
   } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: "Internal Server Error" });
+    res.status(500).send({
+      error: error.message,
+    });
   }
 };
 
@@ -43,12 +42,12 @@ exports.login = async (req, res) => {
 
     const passwordMatched = await bcrypt.compare(password, user.password);
     if (passwordMatched) {
-      const accessToken = generateToken(user);
+      const accessToken = authJwt.generateToken(user);
 
-      // Save session
-      req.session.userId = user._id;
-      req.session.userName = user.username;
-      req.session.name = user.name;
+      // // Save session
+      // req.session.userId = user._id;
+      // req.session.userName = user.username;
+      // req.session.name = user.name;
 
       return res.status(200).json({
         userId: user._id,

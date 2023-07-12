@@ -12,6 +12,7 @@ import { Icons } from "./icons";
 import { buttonVariants } from "./UI/button";
 import { getSession, loginRequest } from "@/lib/services";
 import { useGlobalContext } from "@/context/store";
+import AuthService from "@/lib/services/auth-service";
 
 interface UserLoginFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -30,14 +31,14 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
   const router = useRouter();
 
   const onSubmit = async (data: FormData) => {
-    //setIsloading(true);
+    setIsloading(true);
 
-    const loginResult = await loginRequest("/auth/login", {
+    const loginResult = await AuthService.login({
       email: data.email.toLowerCase(),
       password: data.password,
     });
 
-    if (loginResult.success) router.push("/");
+    if (loginResult) router.push("/");
   };
 
   return (
