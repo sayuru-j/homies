@@ -10,7 +10,6 @@ import Seperator from "./UI/seperator";
 import Link from "next/link";
 import { Icons } from "./icons";
 import { buttonVariants } from "./UI/button";
-import { getSession, loginRequest } from "@/lib/services";
 import { useGlobalContext } from "@/context/store";
 import AuthService from "@/lib/services/auth-service";
 
@@ -38,7 +37,10 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
       password: data.password,
     });
 
-    if (loginResult) router.push("/");
+    if (loginResult) {
+      window.alert("Login successful");
+      router.push("/");
+    }
   };
 
   return (

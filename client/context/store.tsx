@@ -1,6 +1,7 @@
 "use client";
 
 import AuthService from "@/lib/services/auth-service";
+import { useRouter } from "next/navigation";
 import {
   createContext,
   useContext,
@@ -34,6 +35,7 @@ export const GlobalContextProvider = ({ children }: any) => {
   // Change this type ASAP
   const [userId, setUserId] = useState<string>("");
   const [data, setData] = useState<DataType[] | []>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const userLoggedIn = AuthService.getCurrentUser();

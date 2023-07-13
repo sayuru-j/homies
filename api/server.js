@@ -6,6 +6,7 @@ require("dotenv").config();
 
 const corsOptions = require("./config/cors");
 
+const testRoutes = require("./routes/testRoutes");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
 const groupRoutes = require("./routes/groupRoutes");
@@ -26,6 +27,8 @@ const port = process.env.PORT || 8000;
 // app.use(sessionMiddleware);
 
 // Route handlers
+app.use("/test", testRoutes);
+
 app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
 

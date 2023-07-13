@@ -11,6 +11,7 @@ export type SiteConfig = {
 
 export type NavItem = {
   title: string;
+  icon?: string;
   href: string;
   disabled?: boolean;
 };
