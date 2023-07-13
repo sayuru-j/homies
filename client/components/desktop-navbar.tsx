@@ -17,7 +17,7 @@ export default function DesktopNav({ config }: NavItemProps) {
 
   return (
     <nav className="flex items-center h-16 w-full justify-between">
-      <div className="flex w-1/3 gap-10 items-center">
+      <div className="flex w-1/2 gap-6 items-center">
         {config?.map((item) => {
           return (
             <Link key={item.title} href={item.href} passHref>
@@ -25,7 +25,7 @@ export default function DesktopNav({ config }: NavItemProps) {
                 className={`transition-all duration-200 ease-out ${
                   pathname === item.href
                     ? "font-semibold text-primary border-b-2 border-red-500 pb-1"
-                    : "font-normal text-sm text-primary/90"
+                    : "font-normal text-primary/90 scale-75"
                 }`}
                 type="button"
                 disabled={item.disabled}
@@ -41,22 +41,7 @@ export default function DesktopNav({ config }: NavItemProps) {
         })}
       </div>
 
-      <div className="w-1/3 flex items-center justify-center gap-5 pb-1">
-        <Icons.search size={22} />
-        <button
-          type="button"
-          className={buttonVariants({
-            variant: "secondary",
-            size: "sm",
-            className: "px-4",
-          })}
-        >
-          Create story
-        </button>
-        <Icons.bell size={22} />
-      </div>
-
-      <div className="w-1/3 flex justify-end">
+      <div className="w-1/2 flex justify-end">
         <MiniProfile />
       </div>
     </nav>

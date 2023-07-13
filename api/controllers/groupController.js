@@ -75,6 +75,7 @@ exports.deleteGroup = async (req, res) => {
       else res.send({ error: "Group not found" });
     }
 
+    // This is not right, implement it right
     if (power === "user") {
       const groupDeleted = await Group.findByIdAndDelete({
         _id: groupId,

@@ -37,9 +37,16 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
       password: data.password,
     });
 
-    if (loginResult) {
+    if (loginResult.success) {
       window.alert("Login successful");
       router.push("/");
+      setIsloading(false);
+    } else {
+      setError("root", {
+        message: loginResult.error,
+      });
+
+      setIsloading(false);
     }
   };
 
@@ -92,6 +99,11 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
             {errors?.password && (
               <p className="px-1 text-xs text-red-600">
                 {errors?.password?.message}
+              </p>
+            )}
+            {errors.root && (
+              <p className="px-1 text-xs text-red-600">
+                {errors?.root?.message}
               </p>
             )}
           </div>

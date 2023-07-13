@@ -10,6 +10,7 @@ exports.signUp = async (req, res) => {
     email: req.body.email,
     password: await bcrypt.hash(req.body.password, 10), // Hashing the password
     role: req.body.role,
+    // connections: req.body.connections,
   });
 
   try {

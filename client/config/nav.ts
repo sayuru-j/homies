@@ -8,5 +8,10 @@ export const navBarConfig: NavBarConfig = {
       icon: "home",
       href: "/",
     },
+    {
+      title: "Create Story",
+      icon: "list",
+      href: "/story/create",
+    },
   ],
 };
