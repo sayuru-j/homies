@@ -1,10 +1,7 @@
-const express = require("express");
-const cors = require("cors");
-const connectDB = require("./config/db");
-const cookieParser = require("cookie-parser");
-require("dotenv").config();
-
-const corsOptions = require("./config/cors");
+const express = require("express"),
+  cors = require("cors"),
+  cookieParser = require("cookie-parser"),
+  connectDB = require("./config/db");
 
 const testRoutes = require("./routes/testRoutes");
 const userRoutes = require("./routes/userRoutes");
@@ -12,27 +9,22 @@ const authRoutes = require("./routes/authRoutes");
 const groupRoutes = require("./routes/groupRoutes");
 const postRoutes = require("./routes/postRoutes");
 
+// Create global app object
 const app = express();
 
-app.use(express.json()); // Parse the JSON
+// Express configuration
+require("dotenv").config();
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(cookieParser());
 
 connectDB();
 
-const port = process.env.PORT || 8000;
-
-// Middleware
-// app.use(sessionMiddleware);
-
 // Route handlers
-app.use("/test", testRoutes);
+app.use("/api", require("./routes"));
 
-app.use("/user", userRoutes);
-app.use("/auth", authRoutes);
-
-app.use("/group", groupRoutes);
-app.use("/post", postRoutes);
-
-app.listen(port, () => console.log(`App listening on ${port}`));
+// Server startup
+const server = app.listen(process.env.PORT || 8000, () =>
+  console.log(`Server started on ${server.address().port}`)
+);

@@ -13,7 +13,7 @@ interface RegisterBody extends LoginBody {
 }
 
 const login = async ({ email, password }: LoginBody) => {
-  const result = await axios.post(`${baseUrl}/auth/login`, {
+  const result = await axios.post(`${baseUrl}/api/auth/login`, {
     email,
     password,
   });
@@ -32,7 +32,7 @@ const logout = () => {
 };
 
 const register = async ({ name, email, password, role }: RegisterBody) => {
-  const result = await axios.post(`${baseUrl}/auth/register`, {
+  const result = await axios.post(`${baseUrl}/api/auth/register`, {
     name,
     email,
     password,
