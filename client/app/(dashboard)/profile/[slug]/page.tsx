@@ -5,5 +5,5 @@ interface ProfileProps {
 }
 
 export default function Profile({ params }: ProfileProps) {
-  return <div></div>;
+  return <div>Pup</div>;
 }
