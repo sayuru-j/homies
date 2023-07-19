@@ -16,7 +16,7 @@ function Login() {
         className={`${buttonVariants({
           variant: "ghost",
           size: "sm",
-        })} absolute top-4 left-4 md:left-8 md:top-8 lg:text-white bg-transparent`}
+        })} absolute top-4 left-4 md:left-8 md:top-8 lg:text-white`}
         passHref
       >
         <Icons.plus size={16} strokeWidth={2.5} className="rotate-45" />
