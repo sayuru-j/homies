@@ -3,16 +3,10 @@ const express = require("express"),
   cookieParser = require("cookie-parser"),
   connectDB = require("./config/db");
 
-const testRoutes = require("./routes/testRoutes");
-const userRoutes = require("./routes/userRoutes");
-const authRoutes = require("./routes/authRoutes");
-const groupRoutes = require("./routes/groupRoutes");
-const postRoutes = require("./routes/postRoutes");
-
 // Create global app object
 const app = express();
 
-// Express configuration
+// Some normal express configuration
 require("dotenv").config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -21,7 +15,7 @@ app.use(cookieParser());
 
 connectDB();
 
-// Route handlers
+// Route for all routes
 app.use("/api", require("./routes"));
 
 // Server startup

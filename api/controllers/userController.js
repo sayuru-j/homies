@@ -56,3 +56,30 @@ exports.delete = async (req, res) => {
     }
   }
 };
+
+// ---- Add friends --------------------------------
+exports.addFriend = async (req, res) => {
+  const { familiarId } = req.params,
+    { id } = req.user;
+
+  try {
+    const familiarExists = await User.findById(familiarId);
+    if (familiarExists) {
+      const result = await User.findOneAndUpdate(
+        { _id: id },
+        {
+          connections: [familiarId],
+        }
+      );
+      res.status(200).send({
+        message: `You are friends with ${familiarExists.name}`,
+        username: familiarExists.username,
+      });
+    } else {
+      res.status(404).send({ error: "User not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+};

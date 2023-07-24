@@ -1,6 +1,7 @@
 import {
   Bell,
   ChevronLeft,
+  MoreHorizontal,
   Ghost,
   Key,
   Home,
@@ -34,6 +35,7 @@ export const Icons = {
   plus: Plus,
   spinner: Loader2,
   search: Search,
+  tripleDot: MoreHorizontal,
   user: UserPlus,
   userp: UserCircle2,
   google: ({ ...props }: LucideProps) => <BiLogoGoogle {...props} />,

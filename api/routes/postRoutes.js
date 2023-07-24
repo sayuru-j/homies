@@ -12,6 +12,6 @@ router.post("/create", [authJWt.verifyToken], postController.createPost);
 router.delete("/:postId", [authJWt.verifyToken], postController.deletePost);
 
 // --- Getting all posts of users's friends ---------
-router.get("/feed/:userId", [authJWt.verifyToken], postController.getFeed);
+router.get("/feed", [authJWt.verifyToken], postController.getFeed);
 
 module.exports = router;

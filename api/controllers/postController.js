@@ -63,9 +63,13 @@ exports.deletePost = async (req, res) => {
 };
 
 // Getting posts owned --------------------------------
-exports.getPostsOwned = async (userId) => {
+const getPostsOwned = async (userId) => {
   try {
-    const posts = await Post.find({ author: userId });
+    const posts = await Post.find({ author: userId }).populate(
+      "author",
+      "name username avatar"
+    ); // Populate the 'author' field with 'name' property
+
     return posts;
   } catch (error) {
     console.error(error);
@@ -74,28 +78,30 @@ exports.getPostsOwned = async (userId) => {
 
 // --- List of posts related to a user's connections --------------------------------
 exports.getFeed = async (req, res) => {
-  const { userId } = req.params;
   const { id } = req.user;
 
   // Checks the user
-  if (userId === id) {
+  if (id) {
     try {
-      const user = await User.findById(userId);
+      const user = await User.findById(id);
 
       if (user && user.connections.length > 0) {
         const allPosts = [];
 
         for (const userId of user.connections) {
-          const posts = await this.getPostsOwned(userId);
+          const posts = await getPostsOwned(userId);
           allPosts.push(...posts);
         }
 
         res.send(allPosts);
       } else {
-        res.send({ message: "Add some friends to feed your wall" });
+        res.send({ message: "Your wall is empty" });
       }
     } catch (error) {
       console.error(error);
+      res.status(500).send({
+        error: "An error occured",
+      });
     }
   } else {
     res.status(404).send({

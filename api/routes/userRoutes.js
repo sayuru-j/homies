@@ -9,6 +9,9 @@ router.get("/session", userController.getSession);
 // Logout
 router.get("/logout", userController.logOut);
 
+// Add friends
+router.put("/add/:familiarId", [authJwt.verifyToken], userController.addFriend);
+
 // --- Admin routes --------------------------------
 
 // Make power
