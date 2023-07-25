@@ -1,6 +1,4 @@
-import { config } from "dotenv";
 import { createApp } from "./utils/createApp";
-config();
 
 const PORT = process.env.PORT || 8080;
 
