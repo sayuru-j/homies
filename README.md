@@ -45,6 +45,6 @@ Please check the documentation for any additional setup.
 
 ## Contact 📧
 
-For questions or suggestions, reach out to us at homies.dev@example.com.
+For questions or suggestions, reach out to us at sayurujithsara@gmail.com.
 
 We're excited to have you join Homies! Enjoy connecting and collaborating with fellow designers and developers!
