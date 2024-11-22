@@ -4,7 +4,7 @@ import { IconProps } from "@radix-ui/react-icons/dist/types";
 import React from "react";
 import Image from "next/image";
 
-type NavButtonProps = {
+type NavButtonProps = React.HTMLAttributes<HTMLDivElement> & {
   name: string;
   url?: string;
   icon?: React.ForwardRefExoticComponent<
@@ -32,27 +32,38 @@ const rightSideButtons: NavButtonProps[] = [
   },
 ];
 
-const NavButton: React.FC<NavButtonProps> = (props) => {
-  if (props.icon) {
-    const Icon = props.icon;
+export const NavButton: React.FC<NavButtonProps> = ({
+  name,
+  icon: Icon,
+  imageUrl,
+  className,
+  ...props
+}) => {
+  if (Icon) {
     return (
-      <div className="p-2 bg-background w-10 h-10 inline-flex items-center justify-center rounded-full">
+      <div
+        className={`p-2 bg-background cursor-pointer w-10 h-10 inline-flex items-center justify-center rounded-full ${className}`}
+        {...props}
+      >
         <Icon />
       </div>
     );
   }
 
-  if (props.imageUrl) {
+  if (imageUrl) {
     return (
       <Image
-        className="object-cover w-10 h-10 rounded-full"
-        src={props.imageUrl}
-        alt={props.name + "-avatar"}
+        className={`object-cover w-10 h-10 rounded-full ${className}`}
+        src={imageUrl}
+        alt={`${name}-avatar`}
         width={100}
         height={100}
+        {...props}
       />
     );
   }
+
+  return null;
 };
 
 function Header() {

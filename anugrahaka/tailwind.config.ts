@@ -11,6 +11,7 @@ export default {
       colors: {
         background: "#f3f6f8",
         "background-dark": "#e1e5e8",
+        selected: "#e9ebed",
       },
     },
   },
